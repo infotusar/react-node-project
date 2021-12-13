@@ -1,0 +1,23 @@
+apiVersion: skaffold/v2beta18
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/k8s/*
+build:
+  local:
+    push: false
+  artifacts:
+    - image: tusar007/auth
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+      # sync:
+      #   infer:
+      #     - "src/**/*.ts"
+      #     - "src/**/*.tsx"
+      #     - "src/**/*.css"
